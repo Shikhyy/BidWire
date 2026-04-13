@@ -22,4 +22,33 @@ router.get('/', async (_req: Request, res: Response) => {
   res.json(metrics);
 });
 
+router.get('/summary', async (_req: Request, res: Response) => {
+  const auctions = auctionEngine.getAuctions();
+  
+  const active = auctions.filter(a => a.status === 1);
+  const settled = auctions.filter(a => a.status === 3);
+  const archived = auctions.filter(a => a.status === 4);
+  
+  const byType = auctions.reduce((acc, a) => {
+    acc[a.resourceType] = (acc[a.resourceType] || 0) + 1;
+    return acc;
+  }, {} as Record<string, number>);
+  
+  res.json({
+    auctions: {
+      total: auctions.length,
+      active: active.length,
+      settled: settled.length,
+      archived: archived.length,
+    },
+    byType,
+    activeAuctions: active.slice(0, 5).map(a => ({
+      id: a.id,
+      resourceType: a.resourceType,
+      currentBid: a.currentBid,
+      endsAt: a.endsAt,
+    })),
+  });
+});
+
 export default router;
