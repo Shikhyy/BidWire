@@ -58,8 +58,33 @@ router.post('/:id/start', async (req: Request, res: Response) => {
 });
 
 router.get('/', async (req: Request, res: Response) => {
-  const auctions = auctionEngine.getAuctions();
-  res.json(auctions);
+  let auctions = auctionEngine.getAuctions();
+  
+  const { status, resourceType, limit, offset } = req.query;
+  
+  if (status) {
+    auctions = auctions.filter(a => a.status === parseInt(status as string));
+  }
+  
+  if (resourceType) {
+    auctions = auctions.filter(a => a.resourceType === resourceType);
+  }
+  
+  const total = auctions.length;
+  const limitNum = parseInt(limit as string) || 20;
+  const offsetNum = parseInt(offset as string) || 0;
+  
+  auctions = auctions.slice(offsetNum, offsetNum + limitNum);
+  
+  res.json({
+    data: auctions,
+    pagination: {
+      total,
+      limit: limitNum,
+      offset: offsetNum,
+      hasMore: offsetNum + limitNum < total,
+    }
+  });
 });
 
 router.get('/active', async (req: Request, res: Response) => {
