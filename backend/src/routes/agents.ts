@@ -73,7 +73,24 @@ const DEFAULT_AGENTS = [
 DEFAULT_AGENTS.forEach(agent => agents.set(agent.agentId, agent));
 
 router.get('/', async (req: Request, res: Response) => {
-  res.json(Array.from(agents.values()));
+  let allAgents = Array.from(agents.values());
+  
+  const { strategy, limit, offset } = req.query;
+  
+  if (strategy) {
+    allAgents = allAgents.filter(a => a.strategy === strategy);
+  }
+  
+  const total = allAgents.length;
+  const limitNum = parseInt(limit as string) || 10;
+  const offsetNum = parseInt(offset as string) || 0;
+  
+  const paginated = allAgents.slice(offsetNum, offsetNum + limitNum);
+  
+  res.json({
+    data: paginated,
+    pagination: { total, limit: limitNum, offset: offsetNum, hasMore: offsetNum + limitNum < total }
+  });
 });
 
 router.get('/:id', async (req: Request, res: Response) => {
