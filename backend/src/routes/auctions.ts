@@ -92,6 +92,22 @@ router.get('/active', async (req: Request, res: Response) => {
   res.json(auctions);
 });
 
+router.get('/search', async (req: Request, res: Response) => {
+  const { q } = req.query;
+  if (!q) return res.status(400).json({ error: 'Query required' });
+  
+  const auctions = auctionEngine.getAuctions();
+  const query = (q as string).toLowerCase();
+  
+  const results = auctions.filter(a => 
+    a.resourceDescription.toLowerCase().includes(query) ||
+    a.resourceType.toLowerCase().includes(query) ||
+    a.id.toLowerCase().includes(query)
+  );
+  
+  res.json({ query: q, results, count: results.length });
+});
+
 router.get('/:id', async (req: Request, res: Response) => {
   const { id } = req.params;
   const auction = auctionEngine.getAuction(id);
