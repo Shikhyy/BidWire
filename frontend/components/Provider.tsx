@@ -59,3 +59,15 @@ export function WsProvider({ children, backendUrl = 'http://localhost:3001' }: P
     </WsContext.Provider>
   );
 }
+
+export function ConnectionStatus() {
+  const { connected } = useWs();
+  return (
+    <div className="flex items-center gap-2">
+      <span className={`w-2 h-2 rounded-full ${connected ? 'bg-green-500' : 'bg-red-500'}`} />
+      <span className="text-xs text-slate">
+        {connected ? 'Live' : 'Offline'}
+      </span>
+    </div>
+  );
+}

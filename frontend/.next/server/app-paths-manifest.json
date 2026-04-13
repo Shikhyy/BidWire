@@ -1,8 +1,10 @@
 {
+  "/[...slug]/page": "app/[...slug]/page.js",
   "/_not-found/page": "app/_not-found/page.js",
-  "/auctions/[id]/page": "app/auctions/[id]/page.js",
+  "/agents/[id]/page": "app/agents/[id]/page.js",
   "/agents/page": "app/agents/page.js",
-  "/auctions/page": "app/auctions/page.js",
+  "/auctions/[id]/page": "app/auctions/[id]/page.js",
+  "/page": "app/page.js",
   "/history/page": "app/history/page.js",
-  "/page": "app/page.js"
+  "/auctions/page": "app/auctions/page.js"
 }
