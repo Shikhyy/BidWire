@@ -24,7 +24,15 @@ app.use('/api/agents', agentsRouter);
 app.use('/api/demo', demoRouter);
 
 app.get('/health', (req, res) => {
-  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+  const auctions = auctionEngine.getAuctions();
+  res.json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString(),
+    stats: {
+      auctions: auctions.length,
+      active: auctions.filter(a => a.status === 1).length,
+    }
+  });
 });
 
 app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
