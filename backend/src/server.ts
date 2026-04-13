@@ -9,6 +9,7 @@ import auctionsRouter from './routes/auctions.js';
 import resourceRouter from './routes/resource.js';
 import agentsRouter from './routes/agents.js';
 import demoRouter from './routes/demo.js';
+import statsRouter from './routes/stats.js';
 
 dotenv.config();
 
@@ -22,6 +23,7 @@ app.use('/api/auctions', auctionsRouter);
 app.use('/api/resource', resourceRouter);
 app.use('/api/agents', agentsRouter);
 app.use('/api/demo', demoRouter);
+app.use('/api/stats', statsRouter);
 
 app.get('/health', (req, res) => {
   const auctions = auctionEngine.getAuctions();
