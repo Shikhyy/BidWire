@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
-import { WsProvider } from '@/components/Provider';
+import { WsProvider, ConnectionStatus } from '@/components/Provider';
 
 export const metadata: Metadata = {
   title: 'BidWire — Real-Time AI Agent Auctions',
@@ -16,16 +16,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             <a href="/" className="font-syne text-xl font-bold text-dark">
               BidWire
             </a>
-            <div className="flex gap-6 text-sm font-medium">
-              <a href="/auctions" className="text-slate hover:text-dark transition-colors">
-                Auctions
-              </a>
-              <a href="/agents" className="text-slate hover:text-dark transition-colors">
-                Agents
-              </a>
-              <a href="/history" className="text-slate hover:text-dark transition-colors">
-                History
-              </a>
+            <div className="flex items-center gap-6">
+              <div className="hidden sm:block">
+                <ConnectionStatus />
+              </div>
+              <div className="flex gap-6 text-sm font-medium">
+                <a href="/auctions" className="text-slate hover:text-dark transition-colors">
+                  Auctions
+                </a>
+                <a href="/agents" className="text-slate hover:text-dark transition-colors">
+                  Agents
+                </a>
+                <a href="/history" className="text-slate hover:text-dark transition-colors">
+                  History
+                </a>
+              </div>
             </div>
           </nav>
           <main className="relative z-10 pt-20 min-h-screen">

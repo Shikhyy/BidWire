@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import Background3D from '@/components/3d/Background3D';
 
 interface Auction {
   id: string;
@@ -35,6 +36,7 @@ export default function HistoryPage() {
 
   return (
     <div className="min-h-screen px-6 py-12">
+      <Background3D variant="vortex" />
       <div className="max-w-6xl mx-auto">
         <h1 className="font-syne text-4xl font-bold text-dark mb-8">
           Auction History

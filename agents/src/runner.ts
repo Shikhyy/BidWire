@@ -111,7 +111,7 @@ class AgentRunner {
 
     try {
       const response = await fetch(`${backendUrl}/api/auctions/active`);
-      const auctions = await response.json();
+      const auctions: any[] = (await response.json()) as any[];
 
       for (const auction of auctions) {
         for (const agent of this.agents) {

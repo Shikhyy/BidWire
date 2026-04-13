@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useWs } from '@/components/Provider';
 import { motion } from 'framer-motion';
+import Background3D from '@/components/3d/Background3D';
 
 interface Auction {
   id: string;
@@ -91,6 +92,7 @@ export default function AuctionsPage() {
 
   return (
     <div className="min-h-screen px-6 py-12">
+      <Background3D variant="neural" />
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-8">
           <h1 className="font-syne text-4xl font-bold text-dark">

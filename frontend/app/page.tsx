@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useWs } from '@/components/Provider';
 import { motion } from 'framer-motion';
+import Background3D from '@/components/3d/Background3D';
 
 export default function LandingPage() {
   const { socket, connected } = useWs();
@@ -19,18 +20,19 @@ export default function LandingPage() {
       setStats(s => ({ ...s, auctions: s.auctions + 1 }));
     });
 
-    const fetch = async () => {
+    const loadStats = async () => {
       try {
         const res = await fetch('http://localhost:3001/api/auctions');
         const auctions = await res.json();
         setStats(s => ({ ...s, auctions: auctions.length }));
       } catch {}
     };
-    fetch();
+    loadStats();
   }, [socket]);
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center px-6">
+      <Background3D variant="particles" />
       <section className="text-center max-w-3xl">
         <motion.div
           initial={{ opacity: 0, y: 20 }}

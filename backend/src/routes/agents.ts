@@ -15,6 +15,8 @@ const DEFAULT_AGENTS = [
     currentSpend: 0,
     status: 'idle',
     wins: 0,
+    bidHistory: [],
+    totalBids: 0,
   },
   {
     agentId: 'grid',
@@ -26,6 +28,8 @@ const DEFAULT_AGENTS = [
     currentSpend: 0,
     status: 'idle',
     wins: 0,
+    bidHistory: [],
+    totalBids: 0,
   },
   {
     agentId: 'pulse',
@@ -37,6 +41,8 @@ const DEFAULT_AGENTS = [
     currentSpend: 0,
     status: 'idle',
     wins: 0,
+    bidHistory: [],
+    totalBids: 0,
   },
   {
     agentId: 'flux',
@@ -48,6 +54,8 @@ const DEFAULT_AGENTS = [
     currentSpend: 0,
     status: 'idle',
     wins: 0,
+    bidHistory: [],
+    totalBids: 0,
   },
   {
     agentId: 'calm',
@@ -157,6 +165,26 @@ router.get('/:id/balance', async (req: Request, res: Response) => {
     budgetCap: agent.budgetCap,
     currentSpend: agent.currentSpend,
   });
+});
+
+router.get('/:id/history', async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const agent = agents.get(id);
+  
+  if (!agent) {
+    return res.status(404).json({ error: 'Agent not found' });
+  }
+  
+  const stats = {
+    totalBids: agent.totalBids || agent.bidHistory?.length || 0,
+    wins: agent.wins,
+    currentSpend: agent.currentSpend,
+    budgetCap: agent.budgetCap,
+    budgetUsed: (agent.currentSpend / agent.budgetCap * 100).toFixed(1),
+    bidHistory: agent.bidHistory || [],
+  };
+  
+  res.json(stats);
 });
 
 export default router;

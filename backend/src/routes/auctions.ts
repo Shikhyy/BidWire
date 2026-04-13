@@ -116,4 +116,10 @@ router.post('/:id/bid', async (req: Request, res: Response) => {
   }
 });
 
+router.get('/history/all', async (req: Request, res: Response) => {
+  const auctions = auctionEngine.getAuctions();
+  const settled = auctions.filter(a => a.status >= 2);
+  res.json(settled);
+});
+
 export default router;

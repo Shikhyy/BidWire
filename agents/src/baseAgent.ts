@@ -1,5 +1,3 @@
-import { Keypair, Server, Networks } from 'stellar-sdk';
-
 export interface AgentConfig {
   agentId: string;
   name: string;
@@ -20,14 +18,12 @@ export interface Auction {
 
 export abstract class BaseAgent {
   protected config: AgentConfig;
-  protected keypair: Keypair;
   protected currentSpend = 0;
   protected wins = 0;
   protected status: 'idle' | 'active' | 'idle_refunded' = 'idle';
 
   constructor(config: AgentConfig) {
     this.config = config;
-    this.keypair = Keypair.fromSecret(config.secretKey);
   }
 
   abstract decideBid(auction: Auction): number | null;

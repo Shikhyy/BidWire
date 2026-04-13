@@ -26,23 +26,17 @@ body {
   font-family: 'DM Sans', sans-serif;
   background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-mist) 100%);
   color: var(--color-dark);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
   font-family: 'Syne', sans-serif;
 }
 
-.font-syne {
-  font-family: 'Syne', sans-serif;
-}
-
-.font-dm {
-  font-family: 'DM Sans', sans-serif;
-}
-
-.font-mono {
-  font-family: 'JetBrains Mono', monospace;
-}
+.font-syne { font-family: 'Syne', sans-serif; }
+.font-dm { font-family: 'DM Sans', sans-serif; }
+.font-mono { font-family: 'JetBrains Mono', monospace; }
 
 @keyframes float {
   0%, 100% { transform: translateY(0); }
@@ -54,13 +48,14 @@ h1, h2, h3, h4, h5, h6 {
   100% { transform: scale(1.5); opacity: 0; }
 }
 
-.animate-float {
-  animation: float 3s ease-in-out infinite;
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 20px rgba(222, 226, 255, 0.3); }
+  50% { box-shadow: 0 0 40px rgba(222, 226, 255, 0.6); }
 }
 
-.animate-pulse-ring {
-  animation: pulse-ring 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-}
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-pulse-ring { animation: pulse-ring 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+.animate-glow { animation: glow 2s ease-in-out infinite alternate; }
 
 canvas {
   position: fixed;
@@ -70,4 +65,22 @@ canvas {
   height: 100%;
   pointer-events: none;
   z-index: 0;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-width: 640px) {
+  .font-syne { font-size: 1.25rem; }
+  .text-6xl { font-size: 2.5rem; }
+  .text-5xl { font-size: 2rem; }
+  .text-4xl { font-size: 1.75rem; }
+  .p-6 { padding: 1rem; }
+  .p-8 { padding: 1.5rem; }
+  .gap-6 { gap: 1rem; }
+  .gap-8 { gap: 1.5rem; }
 }

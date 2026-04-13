@@ -8,6 +8,7 @@ import { auctionTimer } from './jobs/auctionTimer.js';
 import auctionsRouter from './routes/auctions.js';
 import resourceRouter from './routes/resource.js';
 import agentsRouter from './routes/agents.js';
+import demoRouter from './routes/demo.js';
 
 dotenv.config();
 
@@ -20,9 +21,15 @@ app.use(express.json());
 app.use('/api/auctions', auctionsRouter);
 app.use('/api/resource', resourceRouter);
 app.use('/api/agents', agentsRouter);
+app.use('/api/demo', demoRouter);
 
 app.get('/health', (req, res) => {
   res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
+
+app.use((err: Error, req: express.Request, res: express.Response, next: express.NextFunction) => {
+  console.error('[Error]', err.message);
+  res.status(500).json({ error: 'Internal server error' });
 });
 
 const server = createServer(app);
